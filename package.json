@@ -1,0 +1,83 @@
+{
+  "name": "react-component-test-suite",
+  "version": "1.0.0",
+  "scripts": {
+    "prepack": "yarn build",
+    "build": "tsup-node",
+    "start": "tsup-node --watch",
+    "lint:check": "yarn biome check src",
+    "lint:fix": "yarn lint:check --write",
+    "lint": "yarn ts:check && yarn lint:check",
+    "test": "vitest",
+    "test:unit": "yarn test:coverage",
+    "test:watch": "yarn test --watch",
+    "test:coverage": "yarn test --coverage",
+    "ts:check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bvandercar-vt/react-component-test-suite.git"
+  },
+  "description": "A TypeScript library for defining consistent test suites for React function components with Jest or Vitest, by applying the name of the component to the title of the test suite.",
+  "keywords": [
+    "jest",
+    "vitest",
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/bvandercar-vt/react-component-test-suite/issues"
+  },
+  "homepage": "https://github.com/bvandercar-vt/react-component-test-suite#readme",
+  "type": "module",
+  "source": "src/componentSuite.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "author": "Blake Vandercar <bvandercar@outlook.com>",
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "type-fest": ">=4.2"
+  },
+  "peerDependencies": {
+    "@testing-library/dom": ">=10",
+    "@testing-library/react": ">=10",
+    "@types/react": ">=18",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    },
+    "jest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2",
+    "@testing-library/dom": ">=10",
+    "@testing-library/react": ">=10",
+    "@types/node": "^22",
+    "@types/react": ">=18",
+    "@types/react-dom": ">=18",
+    "@vitest/coverage-v8": "^4",
+    "@vitest/expect": "^4",
+    "happy-dom": "^20",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tsup": "^8",
+    "typescript": "^5",
+    "vitest": "^4"
+  }
+}
