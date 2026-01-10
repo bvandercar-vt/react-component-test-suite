@@ -97,7 +97,7 @@ componentTestSuite(
   Component: AnyFunctionComponent,
   options: {
     testTitle: string
-    renderFunction: (ui: React.ReactElement) => RenderResult // e.g. `render` from `@testing-library/react` 
+    renderFunction: (ui: React.ReactElement) => void // e.g. `render` from `@testing-library/react` 
     suiteFn?: typeof describe.skip | typeof describe.only // for test dev. defaults to normal `describe`.
     insideSuite?: () => void
     Wrapper?: React.FC<{ children: React.ReactNode }>
@@ -200,7 +200,7 @@ type SmokeTestArgs = TestSuiteArgs<{
 
 const smokeTest = (
   Component: AnyFunctionComponent,
-  renderFunction: (ui: React.ReactElement) => RenderResult,
+  renderFunction: (ui: React.ReactElement) => void,
   ...args: SmokeTestArgs
 ) => {
   const { overallOptions, tests } = resolveTestSuiteArgs(args)

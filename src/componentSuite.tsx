@@ -6,7 +6,7 @@
  * offering flexible per-test options.
  */
 
-import { act, type RenderResult } from '@testing-library/react'
+import { act } from '@testing-library/react'
 import React from 'react'
 import type {
   EmptyObject,
@@ -182,7 +182,7 @@ export const componentTestSuite = (
     Wrapper = React.Fragment,
     renderFunction,
   }: ExtractSuiteArgs<CoreTestSuiteArgs>['overallOptions'] & {
-    renderFunction: (ui: React.ReactElement) => RenderResult
+    renderFunction: (ui: React.ReactElement) => void
     /**
      * The base title for each test; each test's `testTitleSuffix` will be
      * appended to this.
