@@ -1,13 +1,15 @@
 # React Component Test Suite
 
-A TypeScript library for defining consistent test suites for React function components with Jest or Vitest, by applying the name of the component to the title of the test suite.
+A TypeScript library for defining consistent test suites for React function components by automatically naming test suites based on component names. Compatible with `jest`, `vitest`, or any testing package that uses global `describe()` and `test()` blocks.
 
 ## Features
 
-- 🎯 **Consistent test structure** - Automatically names test suites based on component names
-- 🔄 **Flexible test configuration** - Support for multiple test scenarios per component
-- 🎨 **Custom wrappers** - Easily wrap components with providers
-- ⏱️ **Lifecycle hooks** - Support for `beforeRender` and `afterRender` hooks (sync or async)
+- 🎯 **Automatic suite naming** - Test suites named after your components
+- 🔄 **Multiple test scenarios** - Support for multiple test scenarios per component
+- ⏱️ **Lifecycle hooks** - `beforeRender` and `afterRender` hooks (sync or async)
+- 🧪 **Test framework agnostic** - Works with Jest, Vitest, or any framework using `describe`/`test`
+- 📝 **Full TypeScript support** - Complete type safety with advanced inference
+- 🛠️ **Extensible** - Build custom test suite builders for your use cases
 
 ## Installation
 
@@ -15,12 +17,16 @@ A TypeScript library for defining consistent test suites for React function comp
 npm install react-component-test-suite
 ```
 
-### Required Dependencies
+### Peer Dependencies
 
-- `react-testing-library`
-- Either `jest` or `vitest`, or any testing library that uses `describe` and `test` blocks.
+This library requires:
+- `react`
+- `@testing-library/react`
+- A test framework with `describe` and `test` (e.g., Jest or Vitest)
 
 ## Examples
+
+### Single Test
 
 ```tsx
 import { render } from '@testing-library/react'
@@ -33,12 +39,19 @@ componentTestSuite(<MyComponent/>, {
   testTitle: 'renders correctly',
   renderFunction: render,
 })
-
-// -- Vitest output: --
-//  ✓ MyComponent
-//     ✓ renders correctly
+```
 
 
+```
+ ----- Test output -----
+✓ MyComponent
+    ✓ renders correctly
+```
+
+### Multiple Tests
+
+
+```tsx
 // Create a test suite named "MyComponent" with multiple tests
 componentTestSuite(
   <MyComponent />,
@@ -62,21 +75,22 @@ componentTestSuite(
     afterRender: async () => await cleanupDatabase()
   }
 )
+```
 
-// -- Vitest output: --
-//  ✓ MyComponent (4)
-//     ✓ renders correctly - default props
-//     ✓ renders correctly - with prop value 1
-//     ✓ renders correctly - with prop value 2
-//     ✓ renders correctly - with setup/teardown
-
+```
+ ----- Test output -----
+✓ MyComponent (4)
+   ✓ renders correctly - default props
+   ✓ renders correctly - with prop value 1
+   ✓ renders correctly - with prop value 2
+   ✓ renders correctly - with setup/teardown
 ```
 
 ## API Reference
 
 ### `componentTestSuite`
 
-Creates a Vitest `describe` block with one or more tests for a React component.
+Creates a `describe` block with one or more tests for a React component.
 
 ```tsx
 componentTestSuite(
@@ -140,17 +154,17 @@ componentTestSuite(MyComponent, {
 
 ### Custom Test Suite Builder
 
-_See below APIs for helper functions and types_
+_See APIs below this section for helper functions and types_
 
 ```tsx
-import { componentTestSuite, mapTestList } from 'react-component-test-suite'
+import { componentTestSuite, mapTestList, type AnyFunctionComponent } from 'react-component-test-suite'
 
 type AccessibilityTest = {
   testTitleSuffix: string
   ariaLabel: string
 }
 
-const createAccessibilityTests = (
+const accessibilityTests = (
   Component: AnyFunctionComponent,
   tests: TestList<AccessibilityTest>
 ) => {
@@ -170,15 +184,47 @@ const createAccessibilityTests = (
 }
 
 ...
-createAccessibilityTests(<MyComponent/>)
-createAccessibilityTests(<MyOtherComponent/>)
-createAccessibilityTests(<MyThirdComponent/>)
+accessibilityTests(<MyComponent/>)
+accessibilityTests(<MyOtherComponent/>)
+accessibilityTests(<AnotherComponent/>)
+
+```
+
+```tsx
+
+import { componentTestSuite, mapTestList, resolveTestSuiteArgs, type AnyFunctionComponent } from 'react-component-test-suite'
+
+type SmokeTestArgs = TestSuiteArgs<{
+  checks?: () => Promisable<unknown>
+}>
+
+const smokeTest = (
+  Component: AnyFunctionComponent,
+  renderFunction: (ui: React.ReactElement) => RenderResult,
+  ...args: SmokeTestArgs
+) => {
+  const { overallOptions, tests } = resolveTestSuiteArgs(args)
+  componentTestSuite(
+    Component,
+    {
+      ...overallOptions,
+      renderFunction,
+      testTitle: 'should render the component',
+    },
+    ...mapTestList(tests, (t) => ({ afterRender: t.checks }))
+  )
+}
+
+...
+smokeTest(<MyComponent/>)
+smokeTest(<MyOtherComponent/>)
+smokeTest(<AnotherComponent/>)
 
 ```
 
 ## TypeScript Support
 
-The library provides full type safety with advanced type inference:
+The library provides full type safety with advanced type inference.
 
 ### `TestList`
 
