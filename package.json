@@ -65,19 +65,19 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3",
-    "@testing-library/dom": "^10.4",
-    "@testing-library/react": "^16.3",
-    "@types/node": "^22.18",
-    "@types/react": "^18.3",
-    "@types/react-dom": "^18.3",
-    "@vitest/coverage-v8": "^4.0",
-    "@vitest/expect": "^4.0",
-    "happy-dom": "^20.3",
-    "react": "^18.3",
-    "react-dom": "^18.3",
-    "tsup": "^8.5",
-    "typescript": "^5.9",
-    "vitest": "^4.0"
+    "@biomejs/biome": "^2",
+    "@testing-library/dom": ">=10",
+    "@testing-library/react": ">=10",
+    "@types/node": "^22",
+    "@types/react": ">=18",
+    "@types/react-dom": ">=18",
+    "@vitest/coverage-v8": "^4",
+    "@vitest/expect": "^4",
+    "happy-dom": "^20",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tsup": "^8",
+    "typescript": "^5",
+    "vitest": "^4"
   }
 }
