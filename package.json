@@ -1,6 +1,6 @@
 {
   "name": "react-component-test-suite",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "prepack": "yarn build",
     "build": "tsup-node",
