@@ -140,17 +140,17 @@ componentTestSuite(MyComponent, {
 
 ### Custom Test Suite Builder
 
-_See below APIs for helper functions and types_
+_See APIs below this section for helper functions and types_
 
 ```tsx
-import { componentTestSuite, mapTestList } from 'react-component-test-suite'
+import { componentTestSuite, mapTestList, type AnyFunctionComponent } from 'react-component-test-suite'
 
 type AccessibilityTest = {
   testTitleSuffix: string
   ariaLabel: string
 }
 
-const createAccessibilityTests = (
+const accessibilityTests = (
   Component: AnyFunctionComponent,
   tests: TestList<AccessibilityTest>
 ) => {
@@ -170,15 +170,47 @@ const createAccessibilityTests = (
 }
 
 ...
-createAccessibilityTests(<MyComponent/>)
-createAccessibilityTests(<MyOtherComponent/>)
-createAccessibilityTests(<MyThirdComponent/>)
+accessibilityTests(<MyComponent/>)
+accessibilityTests(<MyOtherComponent/>)
+accessibilityTests(<AnotherComponent/>)
+
+```
+
+```tsx
+
+import { componentTestSuite, mapTestList, resolveTestSuiteArgs, type AnyFunctionComponent } from 'react-component-test-suite'
+
+type SmokeTestArgs = TestSuiteArgs<{
+  checks?: () => Promisable<unknown>
+}>
+
+const smokeTest = (
+  Component: AnyFunctionComponent,
+  renderFunction: (ui: React.ReactElement) => RenderResult,
+  ...args: SmokeTestArgs
+) => {
+  const { overallOptions, tests } = resolveTestSuiteArgs(args)
+  componentTestSuite(
+    Component,
+    {
+      ...overallOptions,
+      renderFunction,
+      testTitle: 'should render the component',
+    },
+    ...mapTestList(tests, (t) => ({ afterRender: t.checks }))
+  )
+}
+
+...
+smokeTest(<MyComponent/>)
+smokeTest(<MyOtherComponent/>)
+smokeTest(<AnotherComponent/>)
 
 ```
 
 ## TypeScript Support
 
-The library provides full type safety with advanced type inference:
+The library provides full type safety with advanced type inference.
 
 ### `TestList`
 
