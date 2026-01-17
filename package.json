@@ -48,13 +48,13 @@
     "node": ">=22"
   },
   "dependencies": {
-    "type-fest": "^5"
+    "type-fest": ">=4.2"
   },
   "peerDependencies": {
-    "@testing-library/dom": "^10",
-    "@testing-library/react": "^15",
-    "@types/react": "^18",
-    "react": "^18"
+    "@testing-library/dom": ">=10",
+    "@testing-library/react": ">=10",
+    "@types/react": ">=18",
+    "react": ">=18"
   },
   "peerDependenciesMeta": {
     "vitest": {
