@@ -137,6 +137,45 @@ componentTestSuite(MyComponent, {
 }, ...tests)
 ```
 
+
+### Custom Test Suite Builder
+
+_See below APIs for helper functions and types_
+
+```tsx
+import { componentTestSuite, mapTestList } from 'react-component-test-suite'
+
+type AccessibilityTest = {
+  testTitleSuffix: string
+  ariaLabel: string
+}
+
+const createAccessibilityTests = (
+  Component: AnyFunctionComponent,
+  tests: TestList<AccessibilityTest>
+) => {
+  componentTestSuite(
+    Component,
+    {
+      testTitle: 'meets accessibility requirements',
+      renderFunction: render,
+    },
+    ...mapTestList(tests, (test) => ({
+      afterRender: async () => {
+        const element = screen.getByLabelText(test.ariaLabel)
+        expect(element).toBeInTheDocument()
+      }
+    }))
+  )
+}
+
+...
+createAccessibilityTests(<MyComponent/>)
+createAccessibilityTests(<MyOtherComponent/>)
+createAccessibilityTests(<MyThirdComponent/>)
+
+```
+
 ## TypeScript Support
 
 The library provides full type safety with advanced type inference:
@@ -180,40 +219,6 @@ const customTests: TestList<{ customProp: string }> = [
 const mappedTests: TestList = mapTestList(customTests, (test) => ({
   afterRender: () => console.log(test.customProp)
 }))
-```
-
-
-
-## Advanced Patterns
-
-### Custom Test Suite Builder
-
-```tsx
-import { componentTestSuite, mapTestList } from 'react-component-test-suite'
-
-type AccessibilityTest = {
-  testTitleSuffix: string
-  ariaLabel: string
-}
-
-const createAccessibilityTests = (
-  Component: AnyFunctionComponent,
-  tests: TestList<AccessibilityTest>
-) => {
-  componentTestSuite(
-    Component,
-    {
-      testTitle: 'meets accessibility requirements',
-      renderFunction: render,
-    },
-    ...mapTestList(tests, (test) => ({
-      afterRender: async () => {
-        const element = screen.getByLabelText(test.ariaLabel)
-        expect(element).toBeInTheDocument()
-      }
-    }))
-  )
-}
 ```
 
 ## License
