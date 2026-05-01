@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bvandercar-vt/react-component-test-suite.git"
+    "url": "git+https://github.com/bvandrc/react-component-test-suite.git"
   },
   "description": "A TypeScript library for defining consistent test suites for React function components with Jest or Vitest, by applying the name of the component to the title of the test suite.",
   "keywords": [
@@ -26,9 +26,9 @@
     "react"
   ],
   "bugs": {
-    "url": "https://github.com/bvandercar-vt/react-component-test-suite/issues"
+    "url": "https://github.com/bvandrc/react-component-test-suite/issues"
   },
-  "homepage": "https://github.com/bvandercar-vt/react-component-test-suite#readme",
+  "homepage": "https://github.com/bvandrc/react-component-test-suite#readme",
   "type": "module",
   "source": "src/componentSuite.ts",
   "exports": {
