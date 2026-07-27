@@ -35,10 +35,7 @@
         "useJsonImportAttributes": "error"
       },
       "nursery": {
-        "noDeprecatedImports": "off",
-        "noFloatingPromises": "error",
-        "noImportCycles": "error",
-        "noShadow": "error"
+        "noFloatingPromises": "error"
       },
       "performance": {
         "noAccumulatingSpread": "error",
@@ -77,6 +74,9 @@
         "useReadonlyClassProperties": { "level": "error", "fix": "unsafe" }
       },
       "suspicious": {
+        "noDeprecatedImports": "off",
+        "noImportCycles": "error",
+        "noShadow": "error",
         "noEmptyBlockStatements": "error",
         "noEvolvingTypes": "error",
         "useAwait": "error",

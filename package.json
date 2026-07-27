@@ -2,16 +2,16 @@
   "name": "react-component-test-suite",
   "version": "1.1.1",
   "scripts": {
-    "prepack": "yarn build",
+    "prepack": "pnpm build",
     "build": "tsup-node",
     "start": "tsup-node --watch",
-    "lint:check": "yarn biome check src",
-    "lint:fix": "yarn lint:check --write",
-    "lint": "yarn ts:check && yarn lint:check",
+    "lint:check": "pnpm biome check src",
+    "lint:fix": "pnpm lint:check --write",
+    "lint": "pnpm ts:check && pnpm lint:check",
     "test": "vitest",
-    "test:unit": "yarn test:coverage",
-    "test:watch": "yarn test --watch",
-    "test:coverage": "yarn test --coverage",
+    "test:unit": "pnpm test:coverage",
+    "test:watch": "pnpm test --watch",
+    "test:coverage": "pnpm test --coverage",
     "ts:check": "tsc --noEmit"
   },
   "license": "MIT",
@@ -43,7 +43,7 @@
     "README.md"
   ],
   "author": "Blake Vandercar <bvandercar@outlook.com>",
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@11.17.0",
   "engines": {
     "node": ">=22"
   },
@@ -68,7 +68,7 @@
     "@biomejs/biome": "^2",
     "@testing-library/dom": ">=10",
     "@testing-library/react": ">=10",
-    "@types/node": "^22",
+    "@types/node": "^24",
     "@types/react": ">=18",
     "@types/react-dom": ">=18",
     "@vitest/coverage-v8": "^4",
@@ -77,7 +77,7 @@
     "react": ">=18",
     "react-dom": ">=18",
     "tsup": "^8",
-    "typescript": "^5",
+    "typescript": "^7",
     "vitest": "^4"
   }
 }
