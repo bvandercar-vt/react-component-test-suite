@@ -46,7 +46,7 @@ importers:
         specifier: '>=18'
         version: 19.2.8(react@19.2.8)
       tsdown:
-        specifier: ^0.22.14
+        specifier: ^0.22
         version: 0.22.14(typescript@7.0.2)
       typescript:
         specifier: ^7
