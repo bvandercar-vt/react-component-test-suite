@@ -1,6 +1,14 @@
-# React Component Test Suite
+# react-component-test-suite
 
-A TypeScript library for defining consistent test suites for React function components by automatically naming test suites based on component names. Compatible with `jest`, `vitest`, or any testing package that uses global `describe()` and `test()` blocks.
+Write consistent, reusable **React component test suites** for **Jest**, **Vitest**, or any testing package that uses global `describe()` and `test()` blocks. Each `describe` block is automatically named after the component under test, so your test output always matches your component tree — no more copy-pasted, drifting suite titles.
+
+Works with `@testing-library/react` or any render function. Written in TypeScript with full type inference.
+
+## Why use it?
+
+- **No hand-written suite titles** — the component name _is_ the suite name, so renaming a component renames its tests.
+- **One suite, many prop variations** — cover default props, edge-case props, and setup/teardown in a single declarative call.
+- **Shared testing conventions** — build your own smoke-test or accessibility-test helpers on top of the same primitives and reuse them across every component in your app.
 
 ## Features
 
@@ -14,12 +22,17 @@ A TypeScript library for defining consistent test suites for React function comp
 ## Installation
 
 ```bash
-npm install react-component-test-suite
+npm install --save-dev react-component-test-suite
+# or
+pnpm add -D react-component-test-suite
+# or
+yarn add -D react-component-test-suite
 ```
 
 ### Peer Dependencies
 
 This library requires:
+
 - `react`
 - `@testing-library/react`
 - A test framework with `describe` and `test` (e.g., Jest or Vitest)
@@ -35,12 +48,11 @@ import { componentTestSuite } from 'react-component-test-suite'
 const MyComponent = () => <div>Hello World</div>
 
 // Create a test suite named "MyComponent" with a single render test
-componentTestSuite(<MyComponent/>, {
+componentTestSuite(<MyComponent />, {
   testTitle: 'renders correctly',
   renderFunction: render,
 })
 ```
-
 
 ```
  ----- Test output -----
@@ -49,7 +61,6 @@ componentTestSuite(<MyComponent/>, {
 ```
 
 ### Multiple Tests
-
 
 ```tsx
 // Create a test suite named "MyComponent" with multiple tests
@@ -70,10 +81,10 @@ componentTestSuite(
   },
   {
     testTitleSuffix: 'with setup/teardown',
-    Component: <MyComponent  />,
+    Component: <MyComponent />,
     beforeRender: async () => await setupDatabase(),
-    afterRender: async () => await cleanupDatabase()
-  }
+    afterRender: async () => await cleanupDatabase(),
+  },
 )
 ```
 
@@ -97,7 +108,7 @@ componentTestSuite(
   Component: AnyFunctionComponent,
   options: {
     testTitle: string
-    renderFunction: (ui: React.ReactElement) => void // e.g. `render` from `@testing-library/react` 
+    renderFunction: (ui: React.ReactElement) => void // e.g. `render` from `@testing-library/react`
     suiteFn?: typeof describe.skip | typeof describe.only // for test dev. defaults to normal `describe`.
     insideSuite?: () => void
     Wrapper?: React.FC<{ children: React.ReactNode }>
@@ -129,28 +140,33 @@ Each test can include:
 
 ```tsx
 const ThemeWrapper = ({ children }) => (
-  <ThemeProvider theme={testTheme}>
-    {children}
-  </ThemeProvider>
+  <ThemeProvider theme={testTheme}>{children}</ThemeProvider>
 )
 
-componentTestSuite(MyComponent, {
-  testTitle: 'renders with theme',
-  renderFunction: render,
-  Wrapper: ThemeWrapper,
-}, ...tests)
+componentTestSuite(
+  MyComponent,
+  {
+    testTitle: 'renders with theme',
+    renderFunction: render,
+    Wrapper: ThemeWrapper,
+  },
+  ...tests,
+)
 ```
 
 ### Debugging with `describe.only`
 
 ```tsx
-componentTestSuite(MyComponent, {
-  testTitle: 'renders',
-  renderFunction: render,
-  suiteFn: describe.only, // Run only this suite
-}, ...tests)
+componentTestSuite(
+  MyComponent,
+  {
+    testTitle: 'renders',
+    renderFunction: render,
+    suiteFn: describe.only, // Run only this suite
+  },
+  ...tests,
+)
 ```
-
 
 ### Custom Test Suite Builder
 
@@ -236,7 +252,7 @@ import type { TestList } from 'react-component-test-suite'
 // Type-safe test list with custom properties
 const tests: TestList<{ customProp: string }> = [
   { testTitleSuffix: 'test 1', customProp: 'value 1' },
-  { testTitleSuffix: 'test 2', customProp: 'value 2' }
+  { testTitleSuffix: 'test 2', customProp: 'value 2' },
 ]
 ```
 
@@ -249,7 +265,7 @@ Normalizes flexible test suite arguments into a consistent shape.
 ```tsx
 const { overallOptions, tests } = resolveTestSuiteArgs([
   { suiteFn: describe.skip },
-  [{ testTitleSuffix: 'test 1' }]
+  [{ testTitleSuffix: 'test 1' }],
 ])
 ```
 
@@ -259,13 +275,27 @@ Helper to transform custom test lists into the core `TestList` format.
 
 ```tsx
 const customTests: TestList<{ customProp: string }> = [
-  { testTitleSuffix: 'test 1', customProp: 'value1' }
+  { testTitleSuffix: 'test 1', customProp: 'value1' },
 ]
 
 const mappedTests: TestList = mapTestList(customTests, (test) => ({
-  afterRender: () => console.log(test.customProp)
+  afterRender: () => console.log(test.customProp),
 }))
 ```
+
+## FAQ
+
+**Does it work with Vitest?**
+Yes. It uses the global `describe()` and `test()` functions, so run it with `globals: true` in your Vitest config (or import them into scope).
+
+**Does it work with Jest?**
+Yes, with no configuration — Jest exposes `describe` and `test` globally by default.
+
+**Do I have to use `@testing-library/react`?**
+No. Any render function with the signature `(ui: React.ReactElement) => void` works, including `render` from `@testing-library/react`, a custom render wrapper, or a snapshot renderer.
+
+**Is it TypeScript-only?**
+No — it ships compiled JavaScript with bundled type declarations, so plain JS projects work too. TypeScript users get full inference on custom test lists.
 
 ## License
 

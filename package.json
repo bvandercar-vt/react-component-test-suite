@@ -1,13 +1,25 @@
 {
   "name": "react-component-test-suite",
-  "version": "1.1.1",
-  "description": "A TypeScript library for defining consistent test suites for React function components with Jest or Vitest, by applying the name of the component to the title of the test suite.",
+  "version": "1.1.2",
+  "description": "Consistent, reusable test suites for React components in Jest or Vitest — automatically names each describe block after the component under test. Fully typed for TypeScript.",
   "keywords": [
     "jest",
     "vitest",
-    "react"
+    "react",
+    "react-testing",
+    "react-testing-library",
+    "react-components",
+    "testing-library",
+    "test-suite",
+    "component-testing",
+    "unit-testing",
+    "describe",
+    "test-helpers",
+    "test-utils",
+    "smoke-test",
+    "testing"
   ],
-  "homepage": "https://github.com/bvandrc/react-component-test-suite#readme",
+  "homepage": "https://www.npmjs.com/package/react-component-test-suite",
   "bugs": {
     "url": "https://github.com/bvandrc/react-component-test-suite/issues"
   },
