@@ -190,7 +190,7 @@ export const componentTestSuite = (
     testTitle: string
   },
   ...testsArg: CoreTestSuiteTestsList
-) => {
+): void => {
   const componentName = getComponentName(Component)
 
   // always run at least one test (first one uses first arg Component)
