@@ -6,8 +6,8 @@
  * offering flexible per-test options.
  */
 
-import { act } from '@testing-library/react'
 import React from 'react'
+import { act } from '@testing-library/react'
 import type {
   EmptyObject,
   HasRequiredKeys,
@@ -15,6 +15,7 @@ import type {
   SetOptional,
   UnknownRecord,
 } from 'type-fest'
+
 import { type AnyFunctionComponent, getComponentName } from './utils'
 
 /**
