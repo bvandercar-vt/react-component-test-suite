@@ -1,7 +1,8 @@
-import { render, waitFor } from '@testing-library/react'
 import type React from 'react'
+import { render, waitFor } from '@testing-library/react'
 import type { EmptyObject } from 'type-fest'
 import { describe, expect, type Mock, test, vi } from 'vitest'
+
 import {
   componentTestSuite,
   mapTestList,
