@@ -285,17 +285,13 @@ const mappedTests: TestList = mapTestList(customTests, (test) => ({
 
 ## FAQ
 
-**Does it work with Vitest?**
-Yes. It uses the global `describe()` and `test()` functions, so run it with `globals: true` in your Vitest config (or import them into scope).
+**Does it work with Vitest?** Yes. It uses the global `describe()` and `test()` functions, so run it with `globals: true` in your Vitest config (or import them into scope).
 
-**Does it work with Jest?**
-Yes, with no configuration — Jest exposes `describe` and `test` globally by default.
+**Does it work with Jest?** Yes, with no configuration — Jest exposes `describe` and `test` globally by default.
 
-**Do I have to use `@testing-library/react`?**
-No. Any render function with the signature `(ui: React.ReactElement) => void` works, including `render` from `@testing-library/react`, a custom render wrapper, or a snapshot renderer.
+**Do I have to use `@testing-library/react`?** No. Any render function with the signature `(ui: React.ReactElement) => void` works, including `render` from `@testing-library/react`, a custom render wrapper, or a snapshot renderer.
 
-**Is it TypeScript-only?**
-No — it ships compiled JavaScript with bundled type declarations, so plain JS projects work too. TypeScript users get full inference on custom test lists.
+**Is it TypeScript-only?** No — it ships compiled JavaScript with bundled type declarations, so plain JS projects work too. TypeScript users get full inference on custom test lists.
 
 ## License
 
